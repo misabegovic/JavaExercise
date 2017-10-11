@@ -1,11 +1,10 @@
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Validator {
 
-    protected String regex;
+public class Validator {
+	protected String regex;
     protected ArrayList<String> validLinks;
 
     public Validator() {
@@ -25,11 +24,11 @@ public class Validator {
 
     private boolean isMatch(String s, String pattern) {
       try {
-          Pattern patt = Pattern.compile(pattern);
-          Matcher matcher = patt.matcher(s);
-          return matcher.matches();
+        Pattern patt = Pattern.compile(pattern);
+        Matcher matcher = patt.matcher(s);
+        return matcher.matches();
       } catch (Exception e) {
-          return false;
+        return false;
       }
     }
 }
