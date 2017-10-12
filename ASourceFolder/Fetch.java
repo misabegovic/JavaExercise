@@ -13,6 +13,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.nio.charset.StandardCharsets;
+//import org.apache.commons.codec.binary.Base64;
 
 public class Fetch {
 	protected ArrayList<String> listOfBase64Encoded;
@@ -78,18 +80,6 @@ public class Fetch {
 		}
 	}
 
-
-	private void baseEncoder(String aString){
-		byte[] encodedBuilder = Base64.getEncoder().encode(aString.getBytes());
-		this.listOfBase64Encoded.add(encodedBuilder.toString());
-	}
-	
-	private void checksumEncoderFromBase(String aPart) throws NoSuchAlgorithmException{
-		byte[] hash = MessageDigest.getInstance("MD5").digest(aPart.getBytes());
-		this.listOfChecksumString.add(hash.toString());
-	}
-
-
    public byte[] createChecksum(String filename) throws Exception {
      InputStream fis =  new FileInputStream(filename);
 
@@ -105,16 +95,23 @@ public class Fetch {
      } while (numRead != -1);
 
      fis.close();
+     //return Base64.getEncoder().encode(complete.digest());
      return complete.digest();
    }
 
    public String getMD5Checksum(String filename) throws Exception {
        byte[] b = createChecksum(filename);
-       String result = "";
+       //String result = "";
 
-       for (int i=0; i < b.length; i++) {
-          result += Integer.toString( ( b[i] & 0xff ) + 0x100, 16).substring( 1 );
-       }
-       return result;
+       //for (int i=0; i < b.length; i++) {
+         // result += Integer.toString( ( b[i] & 0xff ) + 0x100, 16).substring( 1 );
+       //}
+       
+       byte[] authBytes = b.toString().getBytes(StandardCharsets.UTF_8);
+       String encoded = Base64.getEncoder().encodeToString(authBytes);
+       
+       //byte[] encodedBuilder = Base64.getEncoder().encode(b);
+       //return encodedBuilder.toString();
+       return encoded;
    }
 }
