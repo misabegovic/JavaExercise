@@ -27,12 +27,6 @@ public class Main {
 	      }
 	    }catch(Exception e){}
 
-	    for(String link : aCheck.getList()){
-	      try{
-	        fData.fetchData(link);
-	      }catch(Exception e){}
-	    }
-	    
 	    String target1 = "5zAjHAcCDH/HsNXfEoVeMA==";
 	    String target2 = "RbwRYKKAw0uSMwmukf8oOg==";
 	    
@@ -41,13 +35,12 @@ public class Main {
 	    System.out.println(target2);
 	    System.out.println("--------------");
 	    
-	    for(int i = 1; i <= fData.getNumOfLinks(); i++){
-	    	String md5 = fData.getMD5Checksum("Link"+i);
-	    	System.out.println(md5);
+	    for(String link : aCheck.getList()){
+	      try{
+	        fData.fetchData(link);
+	      }catch(Exception e){}
 	    }
-	    
-	    //System.out.println(fData.getBase64List());
-	    //System.out.println(fData.getChecksumList());
+
 	}
 	
 }

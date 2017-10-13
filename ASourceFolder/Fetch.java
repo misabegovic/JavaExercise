@@ -18,24 +18,13 @@ import java.nio.charset.StandardCharsets;
 
 public class Fetch {
 	protected ArrayList<String> listOfBase64Encoded;
-	protected ArrayList<String> listOfChecksumString;
-	protected int numOfLinks = 0;
 	
 	public Fetch(){
 		this.listOfBase64Encoded = new ArrayList<String>();
-		this.listOfChecksumString = new ArrayList<String>();
 	}
-	
-	public int getNumOfLinks(){
-		return this.numOfLinks;
-	}
-	
+
 	public ArrayList<String> getBase64List(){
 		return this.listOfBase64Encoded;
-	}
-	
-	public ArrayList<String> getChecksumList(){
-		return this.listOfChecksumString;
 	}
 
 	public void fetchData(String link) throws Exception{
@@ -43,75 +32,19 @@ public class Fetch {
 	    URLConnection yc = oracle.openConnection();
 	    BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
 	    StringBuilder aBuilder = new StringBuilder();
-	
-	
-	    //String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(in);
-	
+		
 	    String inputLine;
 	    while ((inputLine = in.readLine()) != null) {
 	       aBuilder.append(inputLine);
-	     }
-	     in.close();
-	    //System.out.println(getMD5Checksum(aBuilder.toString()));
-	    //baseEncoder(aBuilder.toString());
-	    //checksumEncoderFromBase(aBuilder.toString());
-	    //File aFile = new File("Link"+(this.numOfLinks+1));
-	    BufferedWriter bw = null;
-		FileWriter fw = null; 
-		
-		try {
-			this.numOfLinks++;
-			fw = new FileWriter("Link"+this.numOfLinks);
-			
-			PrintWriter writer = new PrintWriter("Link"+this.numOfLinks);
-			writer.print("");
-			writer.close();
-			
-			bw = new BufferedWriter(fw);
-			bw.write(aBuilder.toString());
-			
-			bw.close();
-			fw.close();
+	    }
+	    in.close();
+	    
+	    MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(aBuilder.toString().getBytes());
 
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
+        byte[] byteData = md.digest();
+        String encoded = Base64.getEncoder().encodeToString(byteData);
+	    System.out.println(encoded);
+	    
 	}
-
-   public byte[] createChecksum(String filename) throws Exception {
-     InputStream fis =  new FileInputStream(filename);
-
-     byte[] buffer = new byte[1024];
-     MessageDigest complete = MessageDigest.getInstance("MD5");
-     int numRead;
-
-     do {
-         numRead = fis.read(buffer);
-         if (numRead > 0) {
-             complete.update(buffer, 0, numRead);
-         }
-     } while (numRead != -1);
-
-     fis.close();
-     //return Base64.getEncoder().encode(complete.digest());
-     return complete.digest();
-   }
-
-   public String getMD5Checksum(String filename) throws Exception {
-       byte[] b = createChecksum(filename);
-       //String result = "";
-
-       //for (int i=0; i < b.length; i++) {
-         // result += Integer.toString( ( b[i] & 0xff ) + 0x100, 16).substring( 1 );
-       //}
-       
-       byte[] authBytes = b.toString().getBytes(StandardCharsets.UTF_8);
-       String encoded = Base64.getEncoder().encodeToString(authBytes);
-       
-       //byte[] encodedBuilder = Base64.getEncoder().encode(b);
-       //return encodedBuilder.toString();
-       return encoded;
-   }
 }
