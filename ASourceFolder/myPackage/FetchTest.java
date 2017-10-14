@@ -1,4 +1,6 @@
+package myPackage;
 import static org.junit.Assert.*;
+
 
 import org.junit.Test;
 
@@ -8,7 +10,7 @@ public class FetchTest {
 	@Test
 	public void testInitialization() {
 		Fetch a = new Fetch();
-		assertEquals("class Fetch", a.getClass().toString());
+		assertEquals("class myPackage.Fetch", a.getClass().toString());
 	}
 	
 	@Test

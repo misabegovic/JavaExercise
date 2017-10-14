@@ -1,8 +1,11 @@
+package myPackage;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 
 public class Main {
@@ -30,7 +33,7 @@ public class Main {
 	    String target1 = "5zAjHAcCDH/HsNXfEoVeMA==";
 	    String target2 = "RbwRYKKAw0uSMwmukf8oOg==";
 	    
-	    System.out.println("Target(s): ");
+	    System.out.println("Target format(s): ");
 	    System.out.println(target1);
 	    System.out.println(target2);
 	    System.out.println("--------------");
