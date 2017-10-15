@@ -1,6 +1,4 @@
-package myPackage;
 import static org.junit.Assert.*;
-
 
 import org.junit.Test;
 
@@ -10,7 +8,7 @@ public class ValidatorTest {
 	@Test
 	public void testInitialization() {
 		Validator a = new Validator();
-		assertEquals("class myPackage.Validator", a.getClass().toString());
+		assertEquals("class Validator", a.getClass().toString());
 	}
 	
 	@Test
